@@ -6,6 +6,7 @@ class Message:
     _type: str
     data: dict
 
+
 def handle_world(message, broker):
     name = message.data["name"]
     print(f"Hello {name}")
@@ -22,10 +23,14 @@ def handle_quadrant(message, broker):
         print(f"It startles {len(survivors_in_quadrant)} survivors.")
 
 
+def handle_world_creation(message, broker):
+    broker.db["world"] = message.data
+
 class Broker:
 
     HANDLERS = {
         "world:all": handle_world,
+        "world:create": handle_world_creation,
         "quadrant:a": handle_quadrant,
     }
 
@@ -39,11 +44,9 @@ class Broker:
 
     def work(self, loop):
         if self.message_index < len(self.messages):
-            current_message = broker.messages[self.message_index]
+            current_message = self.messages[self.message_index]
             loop.call_soon(self.HANDLERS[current_message._type](current_message, self), loop)
             self.message_index += 1
-
-
 
 
 if __name__ == "__main__":
