@@ -1,27 +1,11 @@
 from dataclasses import dataclass
-from models import Time, World, Survivor
-import asyncio
+from handlers import *  # Haters gonna hate
 
 
 @dataclass
 class Message:
     _type: str
     data: dict
-
-
-def handle_world_creation(message, broker):
-    broker.db["world"] = World()
-
-
-def handle_time_creation(message, broker):
-    broker.db["time"] = Time()
-
-
-def handle_time_tick(message, broker):
-    broker.db["time"].move()
-
-def handle_survivor_creation(message, broker):
-    broker.db["survivors"] = [Survivor()]
 
 
 class Broker:
