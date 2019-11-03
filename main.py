@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from models import Time, World
+from models import Time, World, Survivor
 import asyncio
 
 
@@ -20,6 +20,9 @@ def handle_time_creation(message, broker):
 def handle_time_tick(message, broker):
     broker.db["time"].move()
 
+def handle_survivor_creation(message, broker):
+    broker.db["survivors"] = [Survivor()]
+
 
 class Broker:
 
@@ -27,6 +30,7 @@ class Broker:
         "world:create": handle_world_creation,
         "time:create": handle_time_creation,
         "time:tick": handle_time_tick,
+        "survivor:create": handle_survivor_creation,
     }
 
     def __init__(self, DB):
