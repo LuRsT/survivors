@@ -1,4 +1,4 @@
-from models import Survivor, World
+from models import Survivor, World, SurvivorGroup
 
 class TestSurvivor:
 
@@ -12,14 +12,22 @@ class TestSurvivor:
         assert survivor.cooking > 0
         assert survivor.fighting > 0
 
-class TestWorld:
 
-    def test_world_contains_survivors(self):
-        world = World(survivors=[Survivor()])
-        survivors = world.survivors
+class TestSurvivorGroup:
+
+    def test_survivor_group_contains_survivors(self):
+        group = SurvivorGroup(survivors=[Survivor()])
+        survivors = group.survivors
         assert len(survivors) == 1
 
+class TestWorld:
+
+    def test_world_contains_survivor_group(self):
+        world = World(SurvivorGroup())
+        group = world.group
+        assert group
+
     def test_world_has_weather(self):
-        world = World()
+        world = World(SurvivorGroup())
         weather = world.weather
         assert weather == "Raining"

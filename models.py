@@ -7,7 +7,12 @@ class Survivor:
         self.cooking = cooking or 1
         self.fighting = fighting or 1
 
-class World:
+
+class SurvivorGroup:
     def __init__(self, survivors=None):
         self.survivors = survivors or []
+
+class World:
+    def __init__(self, group):
+        self.group = group
         self.weather = "Raining"
