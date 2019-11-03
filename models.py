@@ -1,3 +1,6 @@
+from enum import Enum
+
+
 class Survivor:
     def __init__(
         self,
@@ -28,12 +31,16 @@ class World:
 
 
 class Time:
+    class PHASE(Enum):
+        MORNING = 1
+        AFTERNOON = 2
+        NIGHT = 3
 
     def __init__(self, world):
         self.world = world
         self.epoch = 0
-        self.phase = 1
+        self.phase = self.PHASE.MORNING
 
     def move(self):
         self.epoch += 1
-        self.phase += 1
+        self.phase = self.PHASE.AFTERNOON

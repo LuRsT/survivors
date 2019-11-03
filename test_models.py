@@ -31,8 +31,8 @@ class TestWorld:
         weather = world.weather
         assert weather == "Raining"
 
-class TestTime:
 
+class TestTime:
     def test_time_contains_world(self):
         world = World(SurvivorGroup())
         time = Time(world)
@@ -49,3 +49,12 @@ class TestTime:
 
         assert epoch < time.epoch
         assert phase != time.phase
+
+    def test_phases(self):
+        world = World(SurvivorGroup())
+        time = Time(world)
+        phase = time.phase
+
+        time.move()
+
+        assert time.phase in Time.PHASE
