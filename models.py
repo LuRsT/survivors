@@ -8,5 +8,6 @@ class Survivor:
         self.fighting = fighting or 1
 
 class World:
-    def __init__(self, survivors):
-        self.survivors = survivors
+    def __init__(self, survivors=None):
+        self.survivors = survivors or []
+        self.weather = "Raining"

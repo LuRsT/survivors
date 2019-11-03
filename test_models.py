@@ -18,3 +18,8 @@ class TestWorld:
         world = World(survivors=[Survivor()])
         survivors = world.survivors
         assert len(survivors) == 1
+
+    def test_world_has_weather(self):
+        world = World()
+        weather = world.weather
+        assert weather == "Raining"
