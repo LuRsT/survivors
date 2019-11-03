@@ -36,8 +36,7 @@ class Time:
         AFTERNOON = 2
         NIGHT = 3
 
-    def __init__(self, world):
-        self.world = world
+    def __init__(self):
         self.epoch = 0
         self.phase = self.PHASE.MORNING
 

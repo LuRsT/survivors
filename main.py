@@ -1,4 +1,5 @@
 from dataclasses import dataclass
+from models import Time
 import asyncio
 
 
@@ -12,10 +13,20 @@ def handle_world_creation(message, broker):
     broker.db["world"] = message.data
 
 
+def handle_time_creation(message, broker):
+    broker.db["time"] = Time()
+
+
+def handle_time_tick(message, broker):
+    broker.db["time"].move()
+
+
 class Broker:
 
     HANDLERS = {
-       "world:create": handle_world_creation,
+        "world:create": handle_world_creation,
+        "time:create": handle_time_creation,
+        "time:tick": handle_time_tick,
     }
 
     def __init__(self, DB):
