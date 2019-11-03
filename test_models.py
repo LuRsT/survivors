@@ -1,7 +1,7 @@
 from models import Survivor, World, SurvivorGroup
 
-class TestSurvivor:
 
+class TestSurvivor:
     def test_survivor_got_skills(self):
         survivor = Survivor()
 
@@ -14,14 +14,13 @@ class TestSurvivor:
 
 
 class TestSurvivorGroup:
-
     def test_survivor_group_contains_survivors(self):
         group = SurvivorGroup(survivors=[Survivor()])
         survivors = group.survivors
         assert len(survivors) == 1
 
-class TestWorld:
 
+class TestWorld:
     def test_world_contains_survivor_group(self):
         world = World(SurvivorGroup())
         group = world.group
