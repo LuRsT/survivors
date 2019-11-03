@@ -25,3 +25,15 @@ class World:
     def __init__(self, group):
         self.group = group
         self.weather = "Raining"
+
+
+class Time:
+
+    def __init__(self, world):
+        self.world = world
+        self.epoch = 0
+        self.phase = 1
+
+    def move(self):
+        self.epoch += 1
+        self.phase += 1

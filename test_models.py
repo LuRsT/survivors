@@ -1,4 +1,4 @@
-from models import Survivor, World, SurvivorGroup
+from models import Survivor, World, SurvivorGroup, Time
 
 
 class TestSurvivor:
@@ -30,3 +30,22 @@ class TestWorld:
         world = World(SurvivorGroup())
         weather = world.weather
         assert weather == "Raining"
+
+class TestTime:
+
+    def test_time_contains_world(self):
+        world = World(SurvivorGroup())
+        time = Time(world)
+        world = time.world
+        assert world
+
+    def test_time_passes(self):
+        world = World(SurvivorGroup())
+        time = Time(world)
+        epoch = time.epoch
+        phase = time.phase
+
+        time.move()
+
+        assert epoch < time.epoch
+        assert phase != time.phase
