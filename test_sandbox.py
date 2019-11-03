@@ -13,6 +13,7 @@ class TestHandleWorld:
         self.broker.work(loop)
 
         assert "world" in self.broker.db
+        assert self.broker.db["world"].weather == "Raining"
 
     def test_create_time(self):
         DB = {}
@@ -23,6 +24,7 @@ class TestHandleWorld:
         self.broker.work(loop)
 
         assert "time" in self.broker.db
+        assert self.broker.db["time"].phase == Time.PHASE.MORNING
 
     def test_world_tick(self):
         DB = {}

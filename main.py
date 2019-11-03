@@ -1,5 +1,5 @@
 from dataclasses import dataclass
-from models import Time
+from models import Time, World
 import asyncio
 
 
@@ -10,7 +10,7 @@ class Message:
 
 
 def handle_world_creation(message, broker):
-    broker.db["world"] = message.data
+    broker.db["world"] = World()
 
 
 def handle_time_creation(message, broker):

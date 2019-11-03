@@ -25,8 +25,7 @@ class SurvivorGroup:
 
 
 class World:
-    def __init__(self, group):
-        self.group = group
+    def __init__(self):
         self.weather = "Raining"
 
 
