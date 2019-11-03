@@ -7,6 +7,10 @@ class TestSurvivor:
 
         assert survivor.woodcutting > 0
         assert survivor.foraging > 0
+        assert survivor.first_aid > 0
+        assert survivor.crafting > 0
+        assert survivor.cooking > 0
+        assert survivor.fighting > 0
 
 class TestWorld:
 
