@@ -3,10 +3,10 @@ from models import Survivor, World
 class TestSurvivor:
 
     def test_survivor_got_skills(self):
-        survivor = Survivor(woodcutting=10, foraging=10)
+        survivor = Survivor()
 
-        assert 10 == survivor.woodcutting
-        assert 10 == survivor.foraging
+        assert survivor.woodcutting > 0
+        assert survivor.foraging > 0
 
 class TestWorld:
 
