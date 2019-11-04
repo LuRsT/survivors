@@ -40,8 +40,8 @@ class TestHandleTime:
 
         assert self.broker.db["time"].phase != Time.PHASE.MORNING
 
-class TestHandleSurvivors:
 
+class TestHandleSurvivors:
     def test_survivor_creation(self):
         DB = {}
         self.broker = Broker(DB)
@@ -51,3 +51,15 @@ class TestHandleSurvivors:
         self.broker.work(loop)
 
         assert self.broker.db["survivors"][0].woodcutting > 0
+
+    def test_survivor_cuts_wood(self):
+        DB = {}
+        self.broker = Broker(DB)
+        self.broker.add_message(Message("survivor:create", {}))
+        self.broker.add_message(Message("survivor:starts:cuttingwood", {}))
+
+        loop = asyncio.get_event_loop()
+        for _ in range(2):
+            self.broker.work(loop)
+
+        assert len(self.broker.messages) == 3

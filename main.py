@@ -1,11 +1,4 @@
-from dataclasses import dataclass
 from handlers import *  # Haters gonna hate
-
-
-@dataclass
-class Message:
-    _type: str
-    data: dict
 
 
 class Broker:
@@ -15,6 +8,7 @@ class Broker:
         "time:create": handle_time_creation,
         "time:tick": handle_time_tick,
         "survivor:create": handle_survivor_creation,
+        "survivor:starts:cuttingwood": handle_survivor_cutting_wood,
     }
 
     def __init__(self, DB):

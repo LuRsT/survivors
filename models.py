@@ -1,4 +1,11 @@
+from dataclasses import dataclass
 from enum import Enum
+
+
+@dataclass
+class Message:
+    _type: str
+    data: dict
 
 
 class Survivor:
