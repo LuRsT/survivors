@@ -63,3 +63,15 @@ class TestHandleSurvivors:
             self.broker.work(loop)
 
         assert len(self.broker.messages) == 3
+
+    def test_world_provides_wood_to_survivor(self):
+        DB = {}
+        self.broker = Broker(DB)
+        self.broker.add_message(Message("survivor:create", {}))
+        self.broker.add_message(Message("world:provide:wood", {"quantity": 10}))
+
+        loop = asyncio.get_event_loop()
+        for _ in range(2):
+            self.broker.work(loop)
+
+        assert self.broker.db["survivors"][0].wood == 10

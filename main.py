@@ -5,6 +5,7 @@ class Broker:
 
     HANDLERS = {
         "world:create": handle_world_creation,
+        "world:provide:wood": handle_world_provide_wood,
         "time:create": handle_time_creation,
         "time:tick": handle_time_tick,
         "survivor:create": handle_survivor_creation,

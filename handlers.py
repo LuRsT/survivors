@@ -19,3 +19,6 @@ def handle_survivor_creation(message, broker):
 
 def handle_survivor_cutting_wood(message, broker):
     broker.add_message(Message("world:getwood", {}))
+
+def handle_world_provide_wood(message, broker):
+    broker.db["survivors"][0].wood = 10
