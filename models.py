@@ -11,6 +11,7 @@ class Message:
 class Survivor:
     def __init__(
         self,
+        id,
         woodcutting=None,
         foraging=None,
         first_aid=None,
@@ -18,6 +19,7 @@ class Survivor:
         cooking=None,
         fighting=None,
     ):
+        self.id = id
         self.woodcutting = woodcutting or 1
         self.foraging = foraging or 1
         self.first_aid = first_aid or 1

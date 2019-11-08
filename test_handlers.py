@@ -45,7 +45,7 @@ class TestHandleSurvivors:
     def test_survivor_creation(self):
         DB = {}
         self.broker = Broker(DB)
-        self.broker.add_message(Message("survivor:create", {}))
+        self.broker.add_message(Message("survivor:create", {"id": 1}))
 
         loop = asyncio.get_event_loop()
         self.broker.work(loop)
@@ -55,7 +55,7 @@ class TestHandleSurvivors:
     def test_survivor_cuts_wood(self):
         DB = {}
         self.broker = Broker(DB)
-        self.broker.add_message(Message("survivor:create", {}))
+        self.broker.add_message(Message("survivor:create", {"id": 1}))
         self.broker.add_message(Message("survivor:starts:cuttingwood", {}))
 
         loop = asyncio.get_event_loop()
@@ -67,11 +67,14 @@ class TestHandleSurvivors:
     def test_world_provides_wood_to_survivor(self):
         DB = {}
         self.broker = Broker(DB)
-        self.broker.add_message(Message("survivor:create", {}))
-        self.broker.add_message(Message("world:provide:wood", {"quantity": 10}))
+        self.broker.add_message(Message("survivor:create", {"id": 1}))
+        self.broker.add_message(Message("survivor:create", {"id": 2}))
+        self.broker.add_message(Message("world:provide:wood", {"quantity": 10, "survivor": 2}))
 
         loop = asyncio.get_event_loop()
-        for _ in range(2):
+        for _ in range(3):
             self.broker.work(loop)
 
-        assert self.broker.db["survivors"][0].wood == 10
+        survivor = self.broker.db["survivors"][1]
+        assert survivor.id == 2
+        assert survivor.wood == 10
