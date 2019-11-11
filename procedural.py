@@ -17,13 +17,13 @@ def chopping_wood(survivor, island):
     Survivor action
 
     """
-    if survivor.luck >= 3:
+    if survivor.luck >= 5:
         how = "attacked by sparrows"
         survivor.take_damage(D4(), how)
         return
 
     for _ in range(6):
-        if survivor.woodcutting >= 5:
+        if survivor.woodcutting >= 2:
             survivor.acquire_wood(1, "chopping wood")
 
 
@@ -60,17 +60,25 @@ class Survivor:
         self.wood = 0
         self.items = []
 
+    def has_axe(self):
+        return bool(self.axe)
+
+    @property
+    def axe(self):
+        for i in self.items:
+            if isinstance(i, Axe):
+                return i
+
     @property
     def woodcutting(self):
-        return self.base_woodcutting + D6()
+        woodcutting_skill = self.base_woodcutting
+        if self.has_axe():
+            woodcutting_skill += self.axe.power()
+        return woodcutting_skill + D6()
 
     @property
     def luck(self):
         return self.base_luck + D6()
-
-    @property
-    def woodcutting(self):
-        return self.base_woodcutting + D6()
 
     @property
     def crafting(self):
@@ -96,6 +104,7 @@ class Survivor:
         self.story.append(f"{self.name} was {how} and lost some health")
         if self.hp <= 0:
             self.story.append(f"{self.name} has perished in the island...")
+            self.story.append(f"{self.name} had {self.items} and {self.wood} wood")
             self._alive = False
 
     def tell_story(self):
