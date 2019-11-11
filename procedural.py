@@ -17,11 +17,13 @@ def chopping_wood(survivor, island):
     Survivor action
 
     """
-    how = "Attacked by sparrows"
-    survivor.take_damage(D4(), how)
+    if survivor.luck >= 3:
+        how = "attacked by sparrows"
+        survivor.take_damage(D4(), how)
+        return
 
     for _ in range(6):
-        if survivor.woodcutting >= D6():
+        if survivor.woodcutting >= 5:
             survivor.acquire_wood(1, "chopping wood")
 
 
@@ -31,14 +33,13 @@ def craft(survivor, island):
 
     """
     survivor.story.append(f"{survivor.name} starts crafting...")
-    tries = D6 * 3
     survivor.wood -= 5
-    for attempt in tries():
+    for _ in range(3):
         if survivor.wood <= 3:
             break
 
         survivor.wood -= 2
-        if survivor.crafting >= attempt:
+        if survivor.crafting >= 5:
             item = Axe("Wooden Axe", D6)
             survivor.acquire_item(item, "crafting")
 
@@ -51,12 +52,29 @@ class Survivor:
         self._alive = True
 
         ## Skills
-        self.crafting = 3
-        self.woodcutting = 1
+        self.base_crafting = 3
+        self.base_woodcutting = 1
+        self.base_luck = 2
 
         ## Resources
         self.wood = 0
         self.items = []
+
+    @property
+    def woodcutting(self):
+        return self.base_woodcutting + D6()
+
+    @property
+    def luck(self):
+        return self.base_luck + D6()
+
+    @property
+    def woodcutting(self):
+        return self.base_woodcutting + D6()
+
+    @property
+    def crafting(self):
+        return self.base_crafting + D6()
 
     def acquire_item(self, item, how):
         self.story.append(f"{self.name} got a {item.name} {how}")
@@ -123,7 +141,7 @@ def main():
     island = create_island()
 
     all_messages = []
-    for _ in range(2):
+    for _ in range(1):
         survivor = create_adventurer()
         island, messages = embark(island, survivor)
         all_messages.append(messages)
